@@ -1,16 +1,15 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), sentryVitePlugin({
+    org: "jsm-x9",
+    project: "javascript-react"
+  })],
+
   build: {
-    rollupOptions: {
-      onwarn(warning, warn) {
-        // Suppress specific warnings
-        if (warning.code === 'SOME_WARNING_CODE') return;
-        // Use default for everything else
-        warn(warning);
-      },
-    },
-  },
-});
+    sourcemap: true
+  }
+})
